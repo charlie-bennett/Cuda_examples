@@ -13,9 +13,9 @@ __global__ void matrix_mult(int *a, int *b, int *c){
 
 	int c_val = 0;
 	for (int i = 0; i<WIDTH; i++) {
-		c_val += /*your code here*/;
+		c_val += (a[row*WIDTH + i] * b[i*WIDTH + col]);
 	}
-	c[/*your code here*/] = c_val;
+	c[row*WIDTH + col] = c_val;
 }
 
 int main(){
@@ -44,7 +44,7 @@ int main(){
 
 	if( clock_gettime( CLOCK_REALTIME, &start) == -1 ) { perror( "clock gettime" );}
 
-	matrix_mult<<<dimGrid, dimBlock>>>(gpu_a, gpu_b, gpu_c);
+	matrix_mult<<<dimGrid, dimBlock>>>(gpu_a, gpu_b, gpu_c
 	cudaMemcpy(c, gpu_c, sizeof(int) * HEIGHT * WIDTH, cudaMemcpyDeviceToHost);
 
 	if( clock_gettime( CLOCK_REALTIME, &stop) == -1 ) { perror( "clock gettime" );}
